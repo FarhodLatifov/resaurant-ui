@@ -3,14 +3,15 @@
 import Link from "next/link"
 import Image from "next/image"
 import type { MouseEventHandler } from "react"
-import { useCart } from "@/context/CartContext"
+import { selectTotalItems } from "@/store/features/cartSlice"
+import { useAppSelector } from "@/store/hooks"
 
 type Props = {
   onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 const CartIcon = ({ onClick }: Props) => {
-  const { totalItems } = useCart()
+  const totalItems = useAppSelector(selectTotalItems)
 
   return (
     <Link href="/cart" className="flex items-center gap-4" onClick={onClick}>

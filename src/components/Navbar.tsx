@@ -5,8 +5,6 @@ import CartIcon from "./CartIcon"
 import Image from "next/image"
 
 const Navbar = () => {
-  const user = false
-
   return (
     <div className="h-12 text-red-500 p-4 flex items-center justify-between border-b-2 border-b-red-500 uppercase md:h-24 lg:px-20 xl:px-40">
       <div className="hidden md:flex gap-4 flex-1">
@@ -21,7 +19,7 @@ const Navbar = () => {
           <Image src="/phone.png" alt="Phone Icon" width={20} height={20} />
           <span>+992170639009</span>
         </div>
-        {!user ? <Link href="/login">Login</Link> : <Link href="/orders">Orders</Link>}
+        <Link href="/login">Login</Link>
         <CartIcon />
       </div>
     </div>

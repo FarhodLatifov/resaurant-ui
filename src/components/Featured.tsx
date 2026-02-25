@@ -2,10 +2,11 @@
 
 import Image from "next/image"
 import { featuredProducts } from "@/data"
-import { useCart } from "@/context/CartContext"
+import { addToCart } from "@/store/features/cartSlice"
+import { useAppDispatch } from "@/store/hooks"
 
 const Featured = () => {
-  const { addToCart } = useCart()
+  const dispatch = useAppDispatch()
 
   return (
     <div className="w-screen overflow-x-scroll text-red-500">
@@ -22,13 +23,15 @@ const Featured = () => {
               <span className="text-xl font-bold">${item.price}</span>
               <button
                 onClick={() =>
-                  addToCart({
-                    id: item.id,
-                    title: item.title,
-                    img: item.img,
-                    unitPrice: item.price,
-                    quantity: 1,
-                  })
+                  dispatch(
+                    addToCart({
+                      id: item.id,
+                      title: item.title,
+                      img: item.img,
+                      unitPrice: item.price,
+                      quantity: 1,
+                    }),
+                  )
                 }
                 className="bg-red-500 text-white p-2 rounded-md"
               >

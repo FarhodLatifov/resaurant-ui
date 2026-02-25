@@ -29,6 +29,10 @@ const ContactPage = () => {
     return Boolean(hasRequired && emailOk)
   }, [form])
 
+  const updateField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!isValid) return
@@ -41,10 +45,10 @@ const ContactPage = () => {
   }
 
   return (
-    <main className="relative overflow-hidden bg-fuchsia-50  text-red-600">
+    <main className="relative overflow-hidden bg-fuchsia-50 text-red-600">
       <section className="relative mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-6xl flex-col gap-10 p-4 md:min-h-[calc(100vh-9rem)] md:justify-center lg:px-20 xl:px-40">
         <div className="space-y-3">
-          <p className="inline-block rounded-full border border-red-300 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ">
+          <p className="inline-block rounded-full border border-red-300 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
             Contact
           </p>
           <h1 className="text-4xl font-black uppercase leading-tight md:text-6xl">Let us know what you need</h1>
@@ -64,7 +68,7 @@ const ContactPage = () => {
           <form onSubmit={handleSubmit} className="space-y-3">
             <input
               value={form.name}
-              onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+              onChange={(e) => updateField("name", e.target.value)}
               type="text"
               placeholder="Name *"
               className="w-full rounded-md border border-red-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-red-400"
@@ -72,7 +76,7 @@ const ContactPage = () => {
             />
             <input
               value={form.email}
-              onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+              onChange={(e) => updateField("email", e.target.value)}
               type="email"
               placeholder="Email *"
               className="w-full rounded-md border border-red-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-red-400"
@@ -80,21 +84,21 @@ const ContactPage = () => {
             />
             <input
               value={form.phone}
-              onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
+              onChange={(e) => updateField("phone", e.target.value)}
               type="tel"
               placeholder="Phone"
               className="w-full rounded-md border border-red-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-red-400"
             />
             <input
               value={form.subject}
-              onChange={(e) => setForm((prev) => ({ ...prev, subject: e.target.value }))}
+              onChange={(e) => updateField("subject", e.target.value)}
               type="text"
               placeholder="Subject"
               className="w-full rounded-md border border-red-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-red-400"
             />
             <textarea
               value={form.message}
-              onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))}
+              onChange={(e) => updateField("message", e.target.value)}
               placeholder="Message *"
               rows={5}
               className="w-full resize-none rounded-md border border-red-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-red-400"

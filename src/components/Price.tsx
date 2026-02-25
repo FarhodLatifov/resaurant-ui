@@ -1,7 +1,8 @@
 ﻿"use client"
 
-import { useEffect, useState } from "react"
-import { useCart } from "@/context/CartContext"
+import { useState } from "react"
+import { addToCart } from "@/store/features/cartSlice"
+import { useAppDispatch } from "@/store/hooks"
 
 type Option = {
   title: string
@@ -19,16 +20,11 @@ type Props = {
 const Price = ({ id, title, img, price, options = [] }: Props) => {
   const [quantity, setQuantity] = useState(1)
   const [selected, setSelected] = useState(0)
-  const [total, setTotal] = useState(price)
-  const { addToCart } = useCart()
-
-  useEffect(() => {
-    const additional = options[selected]?.additionalPrice ?? 0
-    setTotal(quantity * (price + additional))
-  }, [quantity, selected, options, price])
+  const dispatch = useAppDispatch()
 
   const selectedOption = options[selected]
   const unitPrice = price + (selectedOption?.additionalPrice ?? 0)
+  const total = quantity * unitPrice
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,14 +64,16 @@ const Price = ({ id, title, img, price, options = [] }: Props) => {
 
         <button
           onClick={() =>
-            addToCart({
-              id,
-              title,
-              img,
-              unitPrice,
-              quantity,
-              optionTitle: selectedOption?.title,
-            })
+            dispatch(
+              addToCart({
+                id,
+                title,
+                img,
+                unitPrice,
+                quantity,
+                optionTitle: selectedOption?.title,
+              }),
+            )
           }
           className="uppercase w-56 bg-red-500 text-white p-3 ring-1 ring-red-500"
         >
